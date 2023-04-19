@@ -1,0 +1,25 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.converter {
+    width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+}
+
+.btn {
+    padding: 10px;
+    background-color: rgb(202, 246, 204);
+    border: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: rgb(237, 254, 238);
+}
