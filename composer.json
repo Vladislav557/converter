@@ -3,15 +3,13 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/classes/"
-        }
+        },
+        "files": ["src/utilites/helper.php"]
     },
     "authors": [
         {
             "name": "Vladislav557",
             "email": "trololo557@gmail.com"
         }
-    ],
-    "require": {
-        "calcinai/php-imagick": "^0.1.2"
-    }
+    ]
 }

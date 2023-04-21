@@ -1,44 +1,66 @@
-<?php
+<?php 
 
 namespace App;
 
-use Imagick;
+use App\JpgConverter;
+use App\PngConverter;
+use App\TiffConverter;
 use Exception;
 
 class Converter
 {
-    private string $pathFrom;
-    private string $neededFormat;
-    private string $pathTo;
-
+    private static $supportedFormats = ['jpg', 'png', 'tiff'];
+    private string $filepath;
+    private string $format;
+    
     /**
      * __construct
      *
-     * @param  string $pathFrom - откуда брать изображение
-     * @param  string $neededFormat - требуемый формат
-     * @param  string $pathTo - куда сохранить
+     * @param  string $filepath
+     * @param  string $format
      * @return void
      */
-    public function __construct(string $pathFrom, string $neededFormat, string $pathTo)
+    public function __construct(string $filepath, string $format)
     {
-        $this->pathFrom = $pathFrom;
-        $this->neededFormat = $neededFormat;
-        $this->pathTo = $pathTo;
+        if (!in_array(getExtension($filepath), self::$supportedFormats)) {
+            echo 'Данный формат изображений не поддерживается';
+            exit();
+        }
+        $this->filepath = $filepath;
+        $this->format = $format;
     }
-
+    
     /**
      * toConvert
-     * Конвертирует полученное изображение в нужный формат
+     * Конвертирует изображение в нужный формат.
+     * Поддерживает форматы jpg, png, tiff
      * @return void
      */
     public function toConvert(): void
     {
         try {
-            $image = new Imagick($this->pathFrom);
-            $image->setImageFormat($this->neededFormat);
-            $image->writeImage($this->pathTo);
-        } catch (Exception $exception) {
-            throw new Exception('Ошибка конвертации: ' . $exception->getMessage());
+            
+            // Определяем расширение загруженного файла и вызываем соотвествующий конвертер
+
+            switch (getExtension($this->filepath)) {
+                case 'png':
+                    $pngCoverter = new PngConverter($this->filepath, $this->format);
+                    $pngCoverter->toConvert();
+                    break;
+                case 'jpg':
+                    $pngCoverter = new JpgConverter($this->filepath, $this->format);
+                    $pngCoverter->toConvert();
+                    break;
+                case 'jpg':
+                    $pngCoverter = new TiffConverter($this->filepath, $this->format);
+                    $pngCoverter->toConvert();
+                    break;
+                default:
+                    exit();
+            }
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+            exit();
         }
     }
 }
