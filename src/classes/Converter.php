@@ -31,29 +31,22 @@ class Converter
     }
     
     /**
-     * toConvert
-     * Конвертирует изображение в нужный формат.
-     * Поддерживает форматы jpg, png, tiff
+     * manage
+     * Type converter selection method
      * @return void
      */
-    public function toConvert(): void
+    public function manage():void
     {
         try {
-            
-            // Определяем расширение загруженного файла и вызываем соотвествующий конвертер
-
             switch (getExtension($this->filepath)) {
                 case 'png':
-                    $pngCoverter = new PngConverter($this->filepath, $this->format);
-                    $pngCoverter->toConvert();
+                    (new PngConverter($this->filepath, $this->format))->toConvert();
                     break;
                 case 'jpg':
-                    $pngCoverter = new JpgConverter($this->filepath, $this->format);
-                    $pngCoverter->toConvert();
+                    (new JpgConverter($this->filepath, $this->format))->toConvert();
                     break;
-                case 'jpg':
-                    $pngCoverter = new TiffConverter($this->filepath, $this->format);
-                    $pngCoverter->toConvert();
+                case 'tiff':
+                    (new TiffConverter($this->filepath, $this->format))->toConvert();
                     break;
                 default:
                     exit();
